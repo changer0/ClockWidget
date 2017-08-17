@@ -19,6 +19,9 @@ import java.util.TimerTask;
  */
 
 public class ClockWidget extends AppWidgetProvider {
+    public static final String CLOCK_WIDGET = "clock_widget";
+    public static final String CLOCK_WIDGET_BG_COLOR = "clock_widget_bg_color";
+    public static final String CLOCK_WIDGET_TEXT_COLOR = "clock_widget_text_color";
 
     @Override
     public void onUpdate(final Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {

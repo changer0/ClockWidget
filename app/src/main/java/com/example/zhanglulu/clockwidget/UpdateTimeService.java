@@ -6,9 +6,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Binder;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.text.format.Time;
@@ -24,8 +22,6 @@ import java.util.TimerTask;
  */
 
 public class UpdateTimeService extends Service {
-
-    private int mRootBgColor = 0;
 
     @Override
     public int onStartCommand(Intent intent,  int flags, int startId) {
@@ -48,14 +44,14 @@ public class UpdateTimeService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
 
-        return new UpdateTimeServiceBind();
+        return null;
     }
 
-    class UpdateTimeServiceBind extends Binder{
-        public UpdateTimeService getUpdateTimeService () {
-            return UpdateTimeService.this;
-        }
-    }
+//    class UpdateTimeServiceBind extends Binder{
+//        public UpdateTimeService getUpdateTimeService () {
+//            return UpdateTimeService.this;
+//        }
+//    }
 
     private void updateWidget(Context context){
 
@@ -92,6 +88,13 @@ public class UpdateTimeService extends Service {
         updateView.setOnClickPendingIntent(R.id.widget_data, pendingCalendarIntent);
         updateView.setOnClickPendingIntent(R.id.widget_week, pendingCalendarIntent);
 
+        //跳转设置页面
+        Intent launchSetting = new Intent();
+        launchSetting.setClass(this, MainActivity.class);
+
+        PendingIntent pendingSettingIntent = PendingIntent.getActivity(context, 0,
+                launchSetting, 0);
+        updateView.setOnClickPendingIntent(R.id.widget_setting, pendingSettingIntent);
         //刷新Widget
         AppWidgetManager awg = AppWidgetManager.getInstance(context);
         awg.updateAppWidget(new ComponentName(context, ClockWidget.class),
@@ -121,18 +124,20 @@ public class UpdateTimeService extends Service {
         Log.d("lulu", "UpdateTimeService-updateWidget time => " + strTime);
     }
 
-    public void setRootBgColor(int rootBgColor) {
-        mRootBgColor = rootBgColor;
-    }
 
     /**
      * 更新控件状态
      * @param view
      */
     private void updateState(RemoteViews view) {
-        view.setInt(R.id.widget_root, "setBackgroundColor", mRootBgColor);
+        view.setInt(R.id.widget_root, "setBackgroundColor", getBgColor());
     }
 
+
+    private int getBgColor() {
+        SharedPreferences sp = getSharedPreferences(ClockWidget.CLOCK_WIDGET, MODE_PRIVATE);
+        return sp.getInt(ClockWidget.CLOCK_WIDGET_BG_COLOR, 0);
+    }
 
     private String getWeekString(int week) {
         String ret = "星期";

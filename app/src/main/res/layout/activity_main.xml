@@ -82,7 +82,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <TextView
-
                 android:id="@+id/text_transparency_seekbar_value"
                 android:layout_alignParentRight="true"
                 tools:text="100"
