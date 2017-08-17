@@ -131,12 +131,39 @@ public class UpdateTimeService extends Service {
      */
     private void updateState(RemoteViews view) {
         view.setInt(R.id.widget_root, "setBackgroundColor", getBgColor());
+        if (isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_TIME)) {
+            view.setViewVisibility(R.id.widget_time, View.VISIBLE);
+        } else {
+            view.setViewVisibility(R.id.widget_time, View.GONE);
+        }
+        if (isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_DATA)) {
+            view.setViewVisibility(R.id.widget_data, View.VISIBLE);
+        } else {
+            view.setViewVisibility(R.id.widget_data, View.GONE);
+        }
+        if (isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_WEEK)) {
+            view.setViewVisibility(R.id.widget_week, View.VISIBLE);
+        } else {
+            view.setViewVisibility(R.id.widget_week, View.GONE);
+        }
+        if (isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_SETTING)) {
+            view.setViewVisibility(R.id.widget_setting, View.VISIBLE);
+        } else {
+            view.setViewVisibility(R.id.widget_setting, View.GONE);
+        }
+
+
     }
 
 
     private int getBgColor() {
         SharedPreferences sp = getSharedPreferences(ClockWidget.CLOCK_WIDGET, MODE_PRIVATE);
         return sp.getInt(ClockWidget.CLOCK_WIDGET_BG_COLOR, 0);
+    }
+
+    private boolean isDisplayView(String key) {
+        SharedPreferences sp = getSharedPreferences(ClockWidget.CLOCK_WIDGET, MODE_PRIVATE);
+        return sp.getBoolean(key, true);
     }
 
     private String getWeekString(int week) {

@@ -1,5 +1,6 @@
 package com.example.zhanglulu.clockwidget;
 
+import android.app.MediaRouteButton;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,23 +10,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
     private TextView mSeekBarBgTranVal;
     private SeekBar mSeekBarBgTran;
-    private SeekBar mSeekBarTextTran;
+//    private SeekBar mSeekBarTextTran;
+//    private TextView mSeekBarTextTranVal;
     private View mWidgetRootView;
     private Switch mSwitchTime;
+    private Switch mSwitchData;
+    private Switch mSwitchWeek;
+    private Switch mSwitchSetting;
     private int mBgColor;
     private int mTextColor;
     private TextView mTimeText;
     private TextView mDataText;
     private TextView mWeekText;
-    private TextView mSeekBarTextTranVal;
+    private ImageView mSettingText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +46,6 @@ public class MainActivity extends AppCompatActivity {
         mSeekBarBgTran = (SeekBar) findViewById(R.id.bg_transparency_seekbar);
         mSeekBarBgTran.setMax(255);
         mSeekBarBgTranVal = (TextView) findViewById(R.id.bg_transparency_seekbar_value);
-        mSeekBarTextTran = (SeekBar) findViewById(R.id.text_transparency_seekbar);
-        mSeekBarTextTran.setMax(255);
-        mSeekBarTextTranVal = ((TextView) findViewById(R.id.text_transparency_seekbar_value));
         mWidgetRootView = findViewById(R.id.widget_root);
         findViewById(R.id.widget_loading).setVisibility(View.GONE);
         mTimeText = (TextView) findViewById(R.id.widget_time);
@@ -50,10 +54,71 @@ public class MainActivity extends AppCompatActivity {
         mDataText.setText("2017-08-17");
         mWeekText = ((TextView) findViewById(R.id.widget_week));
         mWeekText.setText("星期四");
+        mSettingText = (ImageView) findViewById(R.id.widget_setting);
         mSwitchTime = (Switch) findViewById(R.id.is_display_time);
+        mSwitchData = (Switch) findViewById(R.id.is_display_data);
+        mSwitchWeek = (Switch) findViewById(R.id.is_display_week);
+        mSwitchSetting = (Switch) findViewById(R.id.is_display_setting);
+        mSwitchTime.setOnCheckedChangeListener(this);
+        mSwitchData.setOnCheckedChangeListener(this);
+        mSwitchWeek.setOnCheckedChangeListener(this);
+        mSwitchSetting.setOnCheckedChangeListener(this);
         SharedPreferences sp = getSharedPreferences(ClockWidget.CLOCK_WIDGET, MODE_PRIVATE);
         setBgState(sp);
         setTextState(sp);
+    }
+
+
+    @Override
+    public void onCheckedChanged(CompoundButton button, boolean b) {
+        switch (button.getId()) {
+            case R.id.is_display_time:
+                saveSwitchState(ClockWidget.CLOCK_WIDGET_HAS_TIME, button.isChecked());
+                break;
+             case R.id.is_display_data:
+                 saveSwitchState(ClockWidget.CLOCK_WIDGET_HAS_DATA, button.isChecked());
+                break;
+             case R.id.is_display_week:
+                 saveSwitchState(ClockWidget.CLOCK_WIDGET_HAS_WEEK, button.isChecked());
+                break;
+             case R.id.is_display_setting:
+                 saveSwitchState(ClockWidget.CLOCK_WIDGET_HAS_SETTING, button.isChecked());
+                break;
+        }
+        setSwitchState();
+    }
+    private void setSwitchState() {
+        if (isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_TIME)) {
+            mTimeText.setVisibility(View.VISIBLE);
+        } else {
+            mTimeText.setVisibility(View.GONE);
+        }
+        if (isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_DATA)) {
+            mDataText.setVisibility(View.VISIBLE);
+        } else {
+            mDataText.setVisibility(View.GONE);
+        }
+        if (isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_WEEK)) {
+            mWeekText.setVisibility(View.VISIBLE);
+        } else {
+            mWeekText.setVisibility(View.GONE);
+        }
+        if (isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_SETTING)) {
+            mSettingText.setVisibility(View.VISIBLE);
+        } else {
+            mSettingText.setVisibility(View.GONE);
+        }
+
+    }
+
+    private boolean isDisplayView(String key) {
+        SharedPreferences sp = getSharedPreferences(ClockWidget.CLOCK_WIDGET, MODE_PRIVATE);
+        return sp.getBoolean(key, true);
+    }
+
+    private void saveSwitchState(String key, boolean state) {
+        SharedPreferences sp = getSharedPreferences(ClockWidget.CLOCK_WIDGET, MODE_PRIVATE);
+        sp.edit().putBoolean(key, state).apply();
     }
 
     /**
@@ -62,25 +127,9 @@ public class MainActivity extends AppCompatActivity {
      */
     private void setTextState( SharedPreferences sp) {
         mTextColor = sp.getInt(ClockWidget.CLOCK_WIDGET_TEXT_COLOR, mTimeText.getCurrentTextColor());
-        mSeekBarTextTran.setProgress(Color.alpha(mTextColor));
         mTimeText.setTextColor(mTextColor);
         mDataText.setTextColor(mTextColor);
         mWeekText.setTextColor(mTextColor);
-        mSeekBarTextTran.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar bar, int alpha, boolean b) {
-                int colorInt = getColorHasAlpha(alpha);
-                mSeekBarTextTranVal.setText(String.valueOf((int)((100f/255f) * alpha)));
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar bar) {
-
-            }
-            @Override
-            public void onStopTrackingTouch(SeekBar bar) {
-
-            }
-        });
 
     }
 
@@ -156,4 +205,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
 }

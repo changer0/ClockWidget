@@ -25,6 +25,27 @@
                 android:layout_height="wrap_content"/>
             <Switch
                 android:id="@+id/is_display_time"
+                android:checked="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <View
+            style="@style/setting_divider"/>
+        <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="显示日期"
+                style="@style/setting_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Switch
+                android:id="@+id/is_display_data"
+                android:checked="true"
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -34,6 +55,46 @@
         <View
             style="@style/setting_divider"/>
 
+        <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="显示周"
+                style="@style/setting_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Switch
+                android:id="@+id/is_display_week"
+                android:checked="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <View
+            style="@style/setting_divider"/>
+        <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="显示设置入口"
+                style="@style/setting_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Switch
+                android:id="@+id/is_display_setting"
+                android:layout_alignParentRight="true"
+                android:checked="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <View
+            style="@style/setting_divider"/>
         <TextView
             android:text="插件背景透明度设置："
             style="@style/setting_title"
@@ -65,33 +126,7 @@
             style="@style/setting_divider"/>
 
 
-        <TextView
-            android:layout_marginTop="20dp"
-            android:text="插件文字透明度设置："
-            style="@style/setting_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
 
-        <RelativeLayout
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <SeekBar
-                android:id="@+id/text_transparency_seekbar"
-                android:layout_marginRight="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/text_transparency_seekbar_value"
-                android:layout_alignParentRight="true"
-                tools:text="100"
-                android:textColor="#000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </RelativeLayout>
-
-        <View
-            style="@style/setting_divider"/>
 
 
         <TextView
@@ -112,7 +147,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="btnClick"
-            android:text="这是一个时钟小部件，快去桌面添加。。。"
+            android:text="MIUI用户点击这里，进入自启动管理将时钟插件添加至白名单"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

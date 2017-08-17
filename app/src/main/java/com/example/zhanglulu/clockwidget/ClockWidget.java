@@ -22,6 +22,10 @@ public class ClockWidget extends AppWidgetProvider {
     public static final String CLOCK_WIDGET = "clock_widget";
     public static final String CLOCK_WIDGET_BG_COLOR = "clock_widget_bg_color";
     public static final String CLOCK_WIDGET_TEXT_COLOR = "clock_widget_text_color";
+    public static final String CLOCK_WIDGET_HAS_TIME = "clock_widget_has_text";
+    public static final String CLOCK_WIDGET_HAS_DATA = "clock_widget_has_data";
+    public static final String CLOCK_WIDGET_HAS_WEEK = "clock_widget_has_week";
+    public static final String CLOCK_WIDGET_HAS_SETTING = "clock_widget_has_setting";
 
     @Override
     public void onUpdate(final Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
