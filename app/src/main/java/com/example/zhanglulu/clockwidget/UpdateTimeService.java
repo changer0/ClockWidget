@@ -6,11 +6,10 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Binder;
 import android.os.IBinder;
-import android.os.Message;
-import android.provider.AlarmClock;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.text.format.Time;
 import android.util.Log;
@@ -26,9 +25,10 @@ import java.util.TimerTask;
 
 public class UpdateTimeService extends Service {
 
+    private int mRootBgColor = 0;
+
     @Override
     public int onStartCommand(Intent intent,  int flags, int startId) {
-
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -47,29 +47,23 @@ public class UpdateTimeService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
-    }
-    private void updateWidget(Context context){
-        //不用Calendar，Time对cpu负荷较小
-        Time time = new Time();
-        time.setToNow();
-        int hour = time.hour;
-        int min = time.minute;
-        int second = time.second;
-        int year = time.year;
-        int month = time.month+1;
-        int day = time.monthDay;
 
-        String strTime = String.format("%02d:%02d", hour, min);
-        String strData = String.format("%04d-%02d-%02d", year, month, day);
+        return new UpdateTimeServiceBind();
+    }
+
+    class UpdateTimeServiceBind extends Binder{
+        public UpdateTimeService getUpdateTimeService () {
+            return UpdateTimeService.this;
+        }
+    }
+
+    private void updateWidget(Context context){
+
+
         RemoteViews updateView = new RemoteViews(context.getPackageName(),
                 R.layout.time_widget_layout);
-        updateView.setTextViewText(R.id.widget_time, strTime);
-        updateView.setTextViewText(R.id.widget_data, strData);
-        updateView.setTextViewText(R.id.widget_week, getWeekString(time.weekDay));
-        updateView.setViewVisibility(R.id.widget_loading, View.GONE);
-
-        Log.d("lulu", "UpdateTimeService-updateWidget time => " + strTime);
+        updateData(updateView);
+        updateState(updateView);
         //点击事件启动闹钟
         //Intent launchAlarms = new Intent(AlarmClock.ACTION_SET_ALARM);
         //updateView.setOnClickPendingIntent(R.id.widget_time, PendingIntent.getActivity(context, 0, launchAlarms, 0));
@@ -79,7 +73,6 @@ public class UpdateTimeService extends Service {
         //"com.android.settings.Settings");
         //settingIntent.setComponent(comp);
         //settingIntent.setAction("android.intent.action.VIEW");
-
 
 
         Intent AlarmClockIntent = new Intent(Intent.ACTION_MAIN).addCategory(
@@ -103,6 +96,41 @@ public class UpdateTimeService extends Service {
         AppWidgetManager awg = AppWidgetManager.getInstance(context);
         awg.updateAppWidget(new ComponentName(context, ClockWidget.class),
                 updateView);
+    }
+
+    /**
+     * 更新数据
+     * @param updateView
+     */
+    private void updateData(RemoteViews updateView) {
+        //不用Calendar，Time对cpu负荷较小
+        Time time = new Time();
+        time.setToNow();
+        int hour = time.hour;
+        int min = time.minute;
+        int second = time.second;
+        int year = time.year;
+        int month = time.month+1;
+        int day = time.monthDay;
+        String strTime = String.format("%02d:%02d", hour, min);
+        String strData = String.format("%04d-%02d-%02d", year, month, day);
+        updateView.setTextViewText(R.id.widget_time, strTime);
+        updateView.setTextViewText(R.id.widget_data, strData);
+        updateView.setTextViewText(R.id.widget_week, getWeekString(time.weekDay));
+        updateView.setViewVisibility(R.id.widget_loading, View.GONE);
+        Log.d("lulu", "UpdateTimeService-updateWidget time => " + strTime);
+    }
+
+    public void setRootBgColor(int rootBgColor) {
+        mRootBgColor = rootBgColor;
+    }
+
+    /**
+     * 更新控件状态
+     * @param view
+     */
+    private void updateState(RemoteViews view) {
+        view.setInt(R.id.widget_root, "setBackgroundColor", mRootBgColor);
     }
 
 
