@@ -158,7 +158,7 @@ public class UpdateTimeService extends Service {
 
     private int getBgColor() {
         SharedPreferences sp = getSharedPreferences(ClockWidget.CLOCK_WIDGET, MODE_PRIVATE);
-        return sp.getInt(ClockWidget.CLOCK_WIDGET_BG_COLOR, 0);
+        return sp.getInt(ClockWidget.CLOCK_WIDGET_BG_COLOR, getResources().getColor(R.color.widget_bg));
     }
 
     private boolean isDisplayView(String key) {

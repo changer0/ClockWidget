@@ -1,6 +1,5 @@
 package com.example.zhanglulu.clockwidget;
 
-import android.app.MediaRouteButton;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -66,6 +65,15 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         SharedPreferences sp = getSharedPreferences(ClockWidget.CLOCK_WIDGET, MODE_PRIVATE);
         setBgState(sp);
         setTextState(sp);
+        setDisplayState();
+        initSwitchState();
+    }
+
+    private void initSwitchState() {
+        mSwitchTime.setChecked(isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_TIME));
+        mSwitchData.setChecked(isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_DATA));
+        mSwitchWeek.setChecked(isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_WEEK));
+        mSwitchSetting.setChecked(isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_SETTING));
     }
 
 
@@ -85,9 +93,9 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                  saveSwitchState(ClockWidget.CLOCK_WIDGET_HAS_SETTING, button.isChecked());
                 break;
         }
-        setSwitchState();
+        setDisplayState();
     }
-    private void setSwitchState() {
+    private void setDisplayState() {
         if (isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_TIME)) {
             mTimeText.setVisibility(View.VISIBLE);
         } else {
