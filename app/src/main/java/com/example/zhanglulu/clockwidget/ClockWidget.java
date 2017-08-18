@@ -26,6 +26,7 @@ public class ClockWidget extends AppWidgetProvider {
     public static final String CLOCK_WIDGET_HAS_DATA = "clock_widget_has_data";
     public static final String CLOCK_WIDGET_HAS_WEEK = "clock_widget_has_week";
     public static final String CLOCK_WIDGET_HAS_SETTING = "clock_widget_has_setting";
+    public static final String CLOCK_WIDGET_HAS_CHINESE = "clock_widget_has_chinese";
 
     @Override
     public void onUpdate(final Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {

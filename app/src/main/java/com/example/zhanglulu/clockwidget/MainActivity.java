@@ -15,23 +15,22 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView mSeekBarBgTranVal;
     private SeekBar mSeekBarBgTran;
 //    private SeekBar mSeekBarTextTran;
 //    private TextView mSeekBarTextTranVal;
     private View mWidgetRootView;
-    private Switch mSwitchTime;
-    private Switch mSwitchData;
-    private Switch mSwitchWeek;
-    private Switch mSwitchSetting;
+
     private int mBgColor;
     private int mTextColor;
     private TextView mTimeText;
     private TextView mDataText;
     private TextView mWeekText;
     private ImageView mSettingText;
+    private View mMiuiSetting;
+    private TextView mChineseText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,48 +52,21 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         mDataText.setText("2017-08-17");
         mWeekText = ((TextView) findViewById(R.id.widget_week));
         mWeekText.setText("星期四");
+        mChineseText = (TextView) findViewById(R.id.widget_chinese);
+        mChineseText.setText("农历 六月廿六");
+        mMiuiSetting = findViewById(R.id.miui_setting);
         mSettingText = (ImageView) findViewById(R.id.widget_setting);
-        mSwitchTime = (Switch) findViewById(R.id.is_display_time);
-        mSwitchData = (Switch) findViewById(R.id.is_display_data);
-        mSwitchWeek = (Switch) findViewById(R.id.is_display_week);
-        mSwitchSetting = (Switch) findViewById(R.id.is_display_setting);
-        mSwitchTime.setOnCheckedChangeListener(this);
-        mSwitchData.setOnCheckedChangeListener(this);
-        mSwitchWeek.setOnCheckedChangeListener(this);
-        mSwitchSetting.setOnCheckedChangeListener(this);
+        findViewById(R.id.switch_setting).setOnClickListener(this);
+
+        mMiuiSetting.setOnClickListener(this);
         SharedPreferences sp = getSharedPreferences(ClockWidget.CLOCK_WIDGET, MODE_PRIVATE);
         setBgState(sp);
         setTextState(sp);
-        setDisplayState();
-        initSwitchState();
-    }
-
-    private void initSwitchState() {
-        mSwitchTime.setChecked(isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_TIME));
-        mSwitchData.setChecked(isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_DATA));
-        mSwitchWeek.setChecked(isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_WEEK));
-        mSwitchSetting.setChecked(isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_SETTING));
     }
 
 
-    @Override
-    public void onCheckedChanged(CompoundButton button, boolean b) {
-        switch (button.getId()) {
-            case R.id.is_display_time:
-                saveSwitchState(ClockWidget.CLOCK_WIDGET_HAS_TIME, button.isChecked());
-                break;
-             case R.id.is_display_data:
-                 saveSwitchState(ClockWidget.CLOCK_WIDGET_HAS_DATA, button.isChecked());
-                break;
-             case R.id.is_display_week:
-                 saveSwitchState(ClockWidget.CLOCK_WIDGET_HAS_WEEK, button.isChecked());
-                break;
-             case R.id.is_display_setting:
-                 saveSwitchState(ClockWidget.CLOCK_WIDGET_HAS_SETTING, button.isChecked());
-                break;
-        }
-        setDisplayState();
-    }
+
+
     private void setDisplayState() {
         if (isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_TIME)) {
             mTimeText.setVisibility(View.VISIBLE);
@@ -116,17 +88,17 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         } else {
             mSettingText.setVisibility(View.GONE);
         }
+        if (isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_CHINESE)) {
+            mChineseText.setVisibility(View.VISIBLE);
+        } else {
+            mChineseText.setVisibility(View.GONE);
+        }
 
     }
 
     private boolean isDisplayView(String key) {
         SharedPreferences sp = getSharedPreferences(ClockWidget.CLOCK_WIDGET, MODE_PRIVATE);
         return sp.getBoolean(key, true);
-    }
-
-    private void saveSwitchState(String key, boolean state) {
-        SharedPreferences sp = getSharedPreferences(ClockWidget.CLOCK_WIDGET, MODE_PRIVATE);
-        sp.edit().putBoolean(key, state).apply();
     }
 
     /**
@@ -193,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         super.onResume();
         //启动之后，也启动一下Service
         startService(new Intent(this, UpdateTimeService.class));
+        setDisplayState();
     }
 
     @Override
@@ -202,16 +175,21 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
     }
 
 
-
-    public void btnClick(View view) {
-        try {
-            Intent intent = new Intent();
-            intent.setComponent(new ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity"));
-            startActivity(intent);
-        } catch (Exception e) {
-            //防止crash
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.miui_setting:
+                try {
+                    Intent intent = new Intent();
+                    intent.setComponent(new ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity"));
+                    startActivity(intent);
+                } catch (Exception e) {
+                    //防止crash
+                }
+                break;
+            case R.id.switch_setting:
+                startActivity(new Intent(this, SwitchActivity.class));
+                break;
         }
-
     }
-
 }

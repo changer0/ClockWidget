@@ -47,14 +47,24 @@
             tools:text="2017-02-3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/widget_chinese"
+            android:textColor="#ffffff"
+            android:textSize="15sp"
+            tools:text="农历 二月初二"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <TextView
+            android:layout_marginTop="5dp"
             android:textSize="25sp"
             tools:text="星期一"
             android:textColor="#ffffff"
             android:id="@+id/widget_week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
+
     </LinearLayout>
 </RelativeLayout>

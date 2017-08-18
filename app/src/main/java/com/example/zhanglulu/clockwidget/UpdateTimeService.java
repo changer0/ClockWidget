@@ -14,6 +14,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.example.zhanglulu.clockwidget.chinesecalendar.Lunar;
+import com.example.zhanglulu.clockwidget.chinesecalendar.LunarSolarConverter;
+import com.example.zhanglulu.clockwidget.chinesecalendar.Solar;
+import com.example.zhanglulu.clockwidget.chinesecalendar.Util;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -120,6 +125,10 @@ public class UpdateTimeService extends Service {
         updateView.setTextViewText(R.id.widget_time, strTime);
         updateView.setTextViewText(R.id.widget_data, strData);
         updateView.setTextViewText(R.id.widget_week, getWeekString(time.weekDay));
+
+        Lunar lunar = LunarSolarConverter.SolarToLunar(new Solar(day, month, year));
+        updateView.setTextViewText(R.id.widget_chinese, "农历 "+ Util.getLunarNameOfMonth(lunar.lunarMonth)
+                + "月"  + Util.getLunarNameOfDay(lunar.lunarDay));
         updateView.setViewVisibility(R.id.widget_loading, View.GONE);
         Log.d("lulu", "UpdateTimeService-updateWidget time => " + strTime);
     }
@@ -151,7 +160,11 @@ public class UpdateTimeService extends Service {
         } else {
             view.setViewVisibility(R.id.widget_setting, View.GONE);
         }
-
+        if (isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_CHINESE)) {
+            view.setViewVisibility(R.id.widget_chinese, View.VISIBLE);
+        } else {
+            view.setViewVisibility(R.id.widget_chinese, View.GONE);
+        }
 
     }
 
