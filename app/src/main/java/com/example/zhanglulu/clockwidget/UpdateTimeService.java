@@ -28,6 +28,9 @@ import java.util.TimerTask;
 
 public class UpdateTimeService extends Service {
 
+
+    private Timer mTimer;
+
     @Override
     public int onStartCommand(Intent intent,  int flags, int startId) {
         return super.onStartCommand(intent, flags, startId);
@@ -35,8 +38,10 @@ public class UpdateTimeService extends Service {
 
     @Override
     public void onCreate() {
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
+        if (mTimer == null) {
+            mTimer = new Timer();
+        }
+        mTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 updateWidget(UpdateTimeService.this);
@@ -188,6 +193,8 @@ public class UpdateTimeService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mTimer.cancel();
+        mTimer = null;
         Log.d("lulu", "UpdateTimeService-onDestroy  " );
     }
 }
