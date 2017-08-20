@@ -33,7 +33,8 @@ public class UpdateTimeService extends Service {
 
     @Override
     public int onStartCommand(Intent intent,  int flags, int startId) {
-        return super.onStartCommand(intent, flags, startId);
+        super.onStartCommand(intent, flags, startId);
+        return Service.START_STICKY;
     }
 
     @Override
@@ -53,7 +54,6 @@ public class UpdateTimeService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-
         return null;
     }
 
