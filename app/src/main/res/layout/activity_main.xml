@@ -24,6 +24,15 @@
             style="@style/setting_divider"/>
 
         <TextView
+            android:id="@+id/text_size_setting"
+            android:text="文字大小设置"
+            style="@style/setting_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <View
+            style="@style/setting_divider"/>
+
+        <TextView
             android:text="插件背景透明度设置："
             style="@style/setting_title"
             android:layout_width="wrap_content"

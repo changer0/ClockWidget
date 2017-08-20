@@ -9,10 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
-import android.widget.Switch;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -54,9 +52,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mWeekText.setText("星期四");
         mChineseText = (TextView) findViewById(R.id.widget_chinese);
         mChineseText.setText("农历 六月廿六");
+
         mMiuiSetting = findViewById(R.id.miui_setting);
         mSettingText = (ImageView) findViewById(R.id.widget_setting);
         findViewById(R.id.switch_setting).setOnClickListener(this);
+        findViewById(R.id.text_size_setting).setOnClickListener(this);
 
         mMiuiSetting.setOnClickListener(this);
         SharedPreferences sp = getSharedPreferences(ClockWidget.CLOCK_WIDGET, MODE_PRIVATE);
@@ -65,9 +65,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    /**
+     * 重新刷新一下View
+     */
+    private void refreshView() {
+        mTimeText.setTextSize(Utils.getTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_TIME, this));
+        mDataText.setTextSize(Utils.getTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_DATE, this));
+        mWeekText.setTextSize(Utils.getTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_WEEK, this));
+        mChineseText.setTextSize(Utils.getTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_CHINESE, this));
 
-
-    private void setDisplayState() {
         if (isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_TIME)) {
             mTimeText.setVisibility(View.VISIBLE);
         } else {
@@ -165,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
         //启动之后，也启动一下Service
         startService(new Intent(this, UpdateTimeService.class));
-        setDisplayState();
+        refreshView();
     }
 
     @Override
@@ -189,6 +195,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.switch_setting:
                 startActivity(new Intent(this, SwitchActivity.class));
+                break;
+            case R.id.text_size_setting:
+                startActivity(new Intent(this, TextSizeSettingActivity.class));
                 break;
         }
     }

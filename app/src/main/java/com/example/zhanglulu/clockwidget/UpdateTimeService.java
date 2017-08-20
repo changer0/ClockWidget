@@ -170,6 +170,11 @@ public class UpdateTimeService extends Service {
         } else {
             view.setViewVisibility(R.id.widget_chinese, View.GONE);
         }
+        view.setTextViewTextSize(R.id.widget_time, 0, Utils.getTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_TIME, this));
+        view.setTextViewTextSize(R.id.widget_data, 0, Utils.getTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_DATE, this));
+        view.setTextViewTextSize(R.id.widget_week, 0, Utils.getTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_WEEK, this));
+        view.setTextViewTextSize(R.id.widget_chinese, 0, Utils.getTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_CHINESE, this));
+
 
     }
 

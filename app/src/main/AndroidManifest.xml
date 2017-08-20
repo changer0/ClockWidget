@@ -33,6 +33,8 @@
 
         <activity android:name=".SwitchActivity">
         </activity>
+        <activity android:name=".TextSizeSettingActivity">
+        </activity>
     </application>
 
 </manifest>
