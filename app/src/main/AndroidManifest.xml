@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -31,9 +31,9 @@
         <!-- 更新时间的后台服务 mythou -->
         <service android:name=".UpdateTimeService"/>
 
-        <activity android:name=".SwitchActivity">
+        <activity android:name=".SwitchActivity" android:launchMode="singleTop">
         </activity>
-        <activity android:name=".TextSizeSettingActivity">
+        <activity android:name=".TextSizeSettingActivity" android:launchMode="singleTop">
         </activity>
     </application>
 

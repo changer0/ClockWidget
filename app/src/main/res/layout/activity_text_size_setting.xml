@@ -120,6 +120,26 @@
             android:layout_height="wrap_content"/>
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/text_size_display"
+        android:text="预览大小"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/text_size_reset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_sel"
+        android:paddingBottom="8dp"
+        android:paddingRight="25dp"
+        android:paddingTop="8dp"
+        android:text="重置文字大小"
+        android:textColor="#fff"
+        android:textSize="18sp" />
 
 
 

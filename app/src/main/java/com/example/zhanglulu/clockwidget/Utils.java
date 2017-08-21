@@ -1,5 +1,6 @@
 package com.example.zhanglulu.clockwidget;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -14,16 +15,17 @@ public class Utils {
     //--------------------------------
     //获取文本大小
     public static int getTextSize(String key, Context context) {
-        SharedPreferences sp = context.getSharedPreferences(ClockWidget.CLOCK_WIDGET, Context.MODE_PRIVATE);
+        Context con = context.getApplicationContext();
+        SharedPreferences sp = con.getSharedPreferences(ClockWidget.CLOCK_WIDGET, Context.MODE_PRIVATE);
         int defaultSize = 30;
         if (key.equals(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_TIME)) {
-            defaultSize = context.getResources().getDimensionPixelSize(R.dimen.time_default_size);
+            defaultSize = con.getResources().getDimensionPixelSize(R.dimen.time_default_size);
         } else if (key.equals(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_DATE)) {
-            defaultSize = context.getResources().getDimensionPixelOffset(R.dimen.date_default_size);
+            defaultSize = con.getResources().getDimensionPixelOffset(R.dimen.date_default_size);
         } else if (key.equals(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_WEEK)) {
-            defaultSize = context.getResources().getDimensionPixelOffset(R.dimen.week_default_size);
-        } else {
-            defaultSize = context.getResources().getDimensionPixelOffset(R.dimen.chinese_default_size);
+            defaultSize = con.getResources().getDimensionPixelOffset(R.dimen.week_default_size);
+        } else if (key.equals(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_CHINESE)){
+            defaultSize = con.getResources().getDimensionPixelOffset(R.dimen.chinese_default_size);
         }
         return sp.getInt(key, defaultSize);
     }
@@ -31,5 +33,17 @@ public class Utils {
     public static void saveTextSize(String key, int size, Context context) {
         SharedPreferences sp = context.getSharedPreferences(ClockWidget.CLOCK_WIDGET, Context.MODE_PRIVATE);
         sp.edit().putInt(key, size).apply();
+    }
+
+    /**
+     * 重置文本大小
+     * @param context
+     */
+    public static void resetTextSize(Context context) {
+        Context con = context.getApplicationContext();
+        saveTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_TIME, con.getResources().getDimensionPixelSize(R.dimen.time_default_size), context);
+        saveTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_DATE, con.getResources().getDimensionPixelSize(R.dimen.date_default_size), context);
+        saveTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_WEEK, con.getResources().getDimensionPixelSize(R.dimen.week_default_size), context);
+        saveTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_CHINESE, con.getResources().getDimensionPixelSize(R.dimen.chinese_default_size), context);
     }
 }

@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -57,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mSettingText = (ImageView) findViewById(R.id.widget_setting);
         findViewById(R.id.switch_setting).setOnClickListener(this);
         findViewById(R.id.text_size_setting).setOnClickListener(this);
-
         mMiuiSetting.setOnClickListener(this);
         SharedPreferences sp = getSharedPreferences(ClockWidget.CLOCK_WIDGET, MODE_PRIVATE);
         setBgState(sp);
@@ -69,10 +69,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 重新刷新一下View
      */
     private void refreshView() {
-        mTimeText.setTextSize(Utils.getTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_TIME, this));
-        mDataText.setTextSize(Utils.getTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_DATE, this));
-        mWeekText.setTextSize(Utils.getTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_WEEK, this));
-        mChineseText.setTextSize(Utils.getTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_CHINESE, this));
+        mTimeText.setTextSize(TypedValue.COMPLEX_UNIT_PX, Utils.getTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_TIME, this));
+        mDataText.setTextSize(TypedValue.COMPLEX_UNIT_PX, Utils.getTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_DATE, this));
+        mWeekText.setTextSize(TypedValue.COMPLEX_UNIT_PX, Utils.getTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_WEEK, this));
+        mChineseText.setTextSize(TypedValue.COMPLEX_UNIT_PX, Utils.getTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_CHINESE, this));
 
         if (isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_TIME)) {
             mTimeText.setVisibility(View.VISIBLE);
