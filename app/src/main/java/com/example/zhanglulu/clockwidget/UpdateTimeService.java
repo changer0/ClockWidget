@@ -81,22 +81,40 @@ public class UpdateTimeService extends Service {
         //settingIntent.setAction("android.intent.action.VIEW");
 
 
-        Intent AlarmClockIntent = new Intent(Intent.ACTION_MAIN).addCategory(
-                Intent.CATEGORY_LAUNCHER).setComponent(
-                new ComponentName("com.android.deskclock", "com.android.alarmclock.AlarmClock"));
-        updateView.setOnClickPendingIntent(R.id.widget_time, PendingIntent.getActivity(context, 0, AlarmClockIntent, 0));
+        String clockPackageName = "com.android.deskclock";
+        String clockActivityName = "";
+        String calendarPackageName = "com.android.calendar";
+        String calendarActivityName = "";
 
+        if (Utils.isHasActivity("com.android.deskclock.AlarmsMainActivity",clockPackageName, this)) {
+            clockActivityName = "com.android.deskclock.AlarmsMainActivity";
+        } else {
+            clockActivityName = "com.android.alarmclock.AlarmClock";
+        }
+        Intent alarmClockIntent = new Intent(Intent.ACTION_MAIN).addCategory(
+                Intent.CATEGORY_LAUNCHER).setComponent(
+                new ComponentName(clockPackageName, clockActivityName));
+        updateView.setOnClickPendingIntent(R.id.widget_time, PendingIntent.getActivity(context, 0, alarmClockIntent, 0));
+
+
+        if (Utils.isHasActivity("com.android.calendar.AllInOneActivity", calendarPackageName, this)) {
+            calendarActivityName = "com.android.calendar.AllInOneActivity";
+        } else {
+            calendarActivityName = "com.android.calendar.homepage.AllInOneActivity";
+        }
 
         //点击widget，启动日历
         Intent launchCalendar = new Intent();
-        launchCalendar.setComponent(new ComponentName("com.android.calendar",
-                "com.android.calendar.homepage.AllInOneActivity"));
+        launchCalendar.setComponent(new ComponentName(calendarPackageName,
+                calendarActivityName));
         launchCalendar.setAction(Intent.ACTION_MAIN);
         launchCalendar.addCategory(Intent.CATEGORY_LAUNCHER);
         PendingIntent pendingCalendarIntent = PendingIntent.getActivity(context, 0,
                 launchCalendar, 0);
         updateView.setOnClickPendingIntent(R.id.widget_data, pendingCalendarIntent);
         updateView.setOnClickPendingIntent(R.id.widget_week, pendingCalendarIntent);
+        updateView.setOnClickPendingIntent(R.id.widget_chinese, pendingCalendarIntent);
+
 
         //跳转设置页面
         Intent launchSetting = new Intent();

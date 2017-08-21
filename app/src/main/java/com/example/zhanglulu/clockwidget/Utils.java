@@ -1,10 +1,18 @@
 package com.example.zhanglulu.clockwidget;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import android.content.Context;
+import android.content.pm.ResolveInfo;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Map;
 
 
 /**
@@ -45,5 +53,17 @@ public class Utils {
         saveTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_DATE, con.getResources().getDimensionPixelSize(R.dimen.date_default_size), context);
         saveTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_WEEK, con.getResources().getDimensionPixelSize(R.dimen.week_default_size), context);
         saveTextSize(ClockWidget.CLOCK_WIDGET_TEXT_SIZE_CHINESE, con.getResources().getDimensionPixelSize(R.dimen.chinese_default_size), context);
+    }
+
+    //------------------------
+    //判断是否含有当前Activity
+    public static boolean isHasActivity(String className,String pageName,  Context ctx) {
+        ArrayList<String> result = new ArrayList<String>();
+        Intent intent = new Intent(Intent.ACTION_MAIN, null);
+        intent.setPackage(pageName);
+        for (ResolveInfo info : ctx.getPackageManager().queryIntentActivities(intent, 0)) {
+            result.add(info.activityInfo.name);
+        }
+        return result.contains(className);
     }
 }
