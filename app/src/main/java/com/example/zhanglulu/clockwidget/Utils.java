@@ -1,18 +1,10 @@
 package com.example.zhanglulu.clockwidget;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
-import android.content.Context;
 import android.content.pm.ResolveInfo;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Map;
 
 
 /**

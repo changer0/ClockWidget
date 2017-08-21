@@ -88,6 +88,9 @@ public class UpdateTimeService extends Service {
 
         if (Utils.isHasActivity("com.android.deskclock.AlarmsMainActivity",clockPackageName, this)) {
             clockActivityName = "com.android.deskclock.AlarmsMainActivity";
+        } else if (Utils.isHasActivity("com.oneplus.deskclock.DeskClock", "com.oneplus.deskclock", this)) {
+            clockPackageName = "com.oneplus.deskclock";
+            clockActivityName = "com.oneplus.deskclock.DeskClock";
         } else {
             clockActivityName = "com.android.alarmclock.AlarmClock";
         }
@@ -99,6 +102,9 @@ public class UpdateTimeService extends Service {
 
         if (Utils.isHasActivity("com.android.calendar.AllInOneActivity", calendarPackageName, this)) {
             calendarActivityName = "com.android.calendar.AllInOneActivity";
+        } else if(Utils.isHasActivity("com.android.calendar.AllInOneActivity", "com.oneplus.calendar", this)){
+            calendarActivityName = "com.android.calendar.AllInOneActivity";
+            calendarPackageName = "com.oneplus.calendar";
         } else {
             calendarActivityName = "com.android.calendar.homepage.AllInOneActivity";
         }
