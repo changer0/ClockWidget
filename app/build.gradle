@@ -5,7 +5,7 @@ android {
         clock_widget {
             keyAlias 'clock_widget'
             keyPassword '941007zll'
-            storeFile file('C:/ASProject/ClockWidget/clock_widget.jks')
+            storeFile file('../clock_widget.jks')
             storePassword '941007zll'
         }
     }
