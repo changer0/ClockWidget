@@ -28,6 +28,7 @@ public class ClockWidget extends AppWidgetProvider {
     public static final String CLOCK_WIDGET_HAS_WEEK = "clock_widget_has_week";
     public static final String CLOCK_WIDGET_HAS_SETTING = "clock_widget_has_setting";
     public static final String CLOCK_WIDGET_HAS_CHINESE = "clock_widget_has_chinese";
+    public static final String CLOCK_WIDGET_HAS_SECOND = "clock_widget_has_second";
     //文字大小调节
     public static final String CLOCK_WIDGET_TEXT_SIZE_TIME = "CLOCK_WIDGET_TEXT_SIZE_TIME";
     public static final String CLOCK_WIDGET_TEXT_SIZE_DATE = "CLOCK_WIDGET_TEXT_SIZE_DATE";

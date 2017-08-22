@@ -13,6 +13,7 @@ public class SwitchActivity extends AppCompatActivity implements CompoundButton.
     private Switch mSwitchWeek;
     private Switch mSwitchSetting;
     private Switch mSwitchChinese;
+    private Switch mSwitchSecond;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,11 +28,14 @@ public class SwitchActivity extends AppCompatActivity implements CompoundButton.
         mSwitchWeek = (Switch) findViewById(R.id.is_display_week);
         mSwitchSetting = (Switch) findViewById(R.id.is_display_setting);
         mSwitchChinese = (Switch) findViewById(R.id.is_display_chinese);
+        mSwitchSecond = (Switch) findViewById(R.id.is_display_second);
         mSwitchTime.setOnCheckedChangeListener(this);
         mSwitchData.setOnCheckedChangeListener(this);
         mSwitchWeek.setOnCheckedChangeListener(this);
         mSwitchSetting.setOnCheckedChangeListener(this);
         mSwitchChinese.setOnCheckedChangeListener(this);
+        mSwitchSecond.setOnCheckedChangeListener(this);
+
         initSwitchState();
     }
 
@@ -41,6 +45,7 @@ public class SwitchActivity extends AppCompatActivity implements CompoundButton.
         mSwitchWeek.setChecked(isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_WEEK));
         mSwitchSetting.setChecked(isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_SETTING));
         mSwitchChinese.setChecked(isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_CHINESE));
+        mSwitchSecond.setChecked(isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_SECOND));
     }
 
 
@@ -62,6 +67,9 @@ public class SwitchActivity extends AppCompatActivity implements CompoundButton.
                 break;
             case R.id.is_display_chinese:
                 saveSwitchState(ClockWidget.CLOCK_WIDGET_HAS_CHINESE, isDisplay);
+                break;
+            case R.id.is_display_second:
+                saveSwitchState(ClockWidget.CLOCK_WIDGET_HAS_SECOND, isDisplay);
                 break;
         }
     }

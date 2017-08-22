@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ResolveInfo;
+
+import com.example.zhanglulu.clockwidget.chinesecalendar.LunarSolarConverter;
+
 import java.util.ArrayList;
 
 
@@ -57,5 +60,51 @@ public class Utils {
             result.add(info.activityInfo.name);
         }
         return result.contains(className);
+    }
+
+    public static String convertGanTime(int hour) {
+        final String[] diZhi =   {"子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"};
+        int index = (hour + 1) / 2;
+        if (index >= diZhi.length) {
+            index = diZhi.length-1;
+        }
+        return diZhi[index] + "时";
+    }
+
+
+    /**
+     *
+     * @param lunarMonth 农历月份
+     * @return 天干地支月份
+     */
+    public static String convertGanZhiMonth(int lunarYear, int lunarMonth) {
+        String ganZhiMonth = "";
+        String ganZhiYear = converGanZhiYear(lunarYear);
+
+        final String[] tianGan = {"甲","乙","丙","丁","戊","己","庚","辛","壬","癸","甲","乙"};
+        final String[] diZhi =   {"寅","卯","辰","巳","午","未","申","酉","戌","亥","子","丑"};
+        int index = 0;
+        if (ganZhiYear.contains("戊") || ganZhiYear.contains("癸")) {
+            index = 0;
+        } else if (ganZhiYear.contains("丁") || ganZhiYear.contains("壬")) {
+            index = 2;
+        } else if (ganZhiYear.contains("丙") || ganZhiYear.contains("辛")) {
+            index = 4;
+        } else if (ganZhiYear.contains("乙") || ganZhiYear.contains("庚")) {
+            index = 6;
+        } else {
+            index = 8;
+        }
+        ganZhiMonth = tianGan[((lunarMonth-1) - index + 12) % 12];
+        return ganZhiMonth + diZhi[lunarMonth-1];
+    }
+
+    /**
+     *
+     * @param lunarYear 农历年份
+     * @return 天干地支年份
+     */
+    public static String converGanZhiYear(int lunarYear) {
+        return LunarSolarConverter.lunarYearToGanZhi(lunarYear);
     }
 }

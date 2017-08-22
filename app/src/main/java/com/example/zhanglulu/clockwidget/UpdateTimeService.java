@@ -47,7 +47,7 @@ public class UpdateTimeService extends Service {
             public void run() {
                 updateWidget(UpdateTimeService.this);
             }
-        }, 1000, 1000);
+        }, 1000, 300);
         super.onCreate();
     }
 
@@ -149,7 +149,12 @@ public class UpdateTimeService extends Service {
         int year = time.year;
         int month = time.month+1;
         int day = time.monthDay;
-        String strTime = String.format("%02d:%02d", hour, min);
+        String strTime = "";
+        if (isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_SECOND)) {
+            strTime = String.format("%02d:%02d:%02d", hour, min, second);
+        } else {
+            strTime = String.format("%02d:%02d", hour, min);
+        }
         String strData = String.format("%04d-%02d-%02d", year, month, day);
         updateView.setTextViewText(R.id.widget_time, strTime);
         updateView.setTextViewText(R.id.widget_data, strData);

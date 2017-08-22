@@ -99,6 +99,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             mChineseText.setVisibility(View.GONE);
         }
+        if (isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_SECOND)) {
+            mTimeText.setText("12:12:12");
+        } else {
+            mTimeText.setText("12:12");
+        }
 
     }
 
