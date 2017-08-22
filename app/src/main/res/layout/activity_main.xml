@@ -17,7 +17,7 @@
         <TextView
             android:id="@+id/switch_setting"
             android:text="显示设置"
-            style="@style/setting_title"
+            style="@style/setting_jump"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <View
@@ -26,19 +26,21 @@
         <TextView
             android:id="@+id/text_size_setting"
             android:text="文字大小设置"
-            style="@style/setting_title"
+            style="@style/setting_jump"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <View
             style="@style/setting_divider"/>
 
         <TextView
+            android:layout_marginTop="15dp"
             android:text="插件背景透明度设置："
             style="@style/setting_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <RelativeLayout
+            android:layout_marginBottom="15dp"
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -63,10 +65,8 @@
             style="@style/setting_divider"/>
 
 
-
-
-
         <TextView
+            android:layout_marginTop="15dp"
             android:text="效果预览:"
             style="@style/setting_title"
             android:layout_width="match_parent"
@@ -80,6 +80,7 @@
 
 
         <TextView
+            android:layout_marginTop="15dp"
             android:id="@+id/miui_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

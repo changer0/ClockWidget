@@ -34,7 +34,7 @@
     </RelativeLayout>
 
     <View
-        style="@style/setting_divider"/>
+        style="@style/setting_divider_switch"/>
 
 
     <TextView
@@ -63,7 +63,7 @@
     </RelativeLayout>
 
     <View
-        style="@style/setting_divider"/>
+        style="@style/setting_divider_switch"/>
 
 
     <TextView
@@ -92,7 +92,7 @@
     </RelativeLayout>
 
     <View
-        style="@style/setting_divider"/>
+        style="@style/setting_divider_switch"/>
 
 
     <TextView
