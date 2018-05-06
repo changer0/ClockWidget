@@ -10,9 +10,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
+
+import com.example.zhanglulu.clockwidget.chinesecalendar.Util;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView mSettingText;
     private View mMiuiSetting;
     private TextView mChineseText;
+    private TextView m12ModeText;
+    private Switch mSwitchUse12Mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mWeekText.setText("星期四");
         mChineseText = (TextView) findViewById(R.id.widget_chinese);
         mChineseText.setText("农历 六月廿六");
+        m12ModeText = (TextView) findViewById(R.id.widget_time_mode);
+        m12ModeText.setText("am");
+        mSwitchUse12Mode = (Switch) findViewById(R.id.is_use_12_mode);
+        mSwitchUse12Mode.setChecked(Utils.isUse12Mode(this));
+        mSwitchUse12Mode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Utils.setUse12Mode(MainActivity.this, b);
+                if (Utils.isUse12Mode(MainActivity.this)) {
+                    m12ModeText.setVisibility(View.VISIBLE);
+                } else {
+                    m12ModeText.setVisibility(View.GONE);
+                }
+            }
+        });
 
         mMiuiSetting = findViewById(R.id.miui_setting);
         mSettingText = (ImageView) findViewById(R.id.widget_setting);
@@ -103,6 +124,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mTimeText.setText("12:12:12");
         } else {
             mTimeText.setText("12:12");
+        }
+        if (Utils.isUse12Mode(this)) {
+            m12ModeText.setVisibility(View.VISIBLE);
+        } else {
+            m12ModeText.setVisibility(View.GONE);
         }
 
     }

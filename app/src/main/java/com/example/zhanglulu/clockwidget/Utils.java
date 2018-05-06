@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ResolveInfo;
+import android.widget.TextView;
 
 import com.example.zhanglulu.clockwidget.chinesecalendar.LunarSolarConverter;
 
@@ -51,6 +52,39 @@ public class Utils {
     }
 
     //------------------------
+
+
+    // 使用12进制
+    public static boolean isUse12Mode(Context ctx) {
+        SharedPreferences sp = ctx.getSharedPreferences(ClockWidget.CLOCK_WIDGET, Context.MODE_PRIVATE);
+        return sp.getBoolean(ClockWidget.CLOCK_WIDGET_IS_USE_12_MODE, false);
+    }
+
+    public static void setUse12Mode(Context ctx, boolean isUse12Mode) {
+        SharedPreferences sp = ctx.getSharedPreferences(ClockWidget.CLOCK_WIDGET, Context.MODE_PRIVATE);
+        sp.edit().putBoolean(ClockWidget.CLOCK_WIDGET_IS_USE_12_MODE, isUse12Mode).apply();
+    }
+
+    public static int get12ModeTime(int currentHour, Context ctx) {
+        int ret = currentHour;
+        if (currentHour > 12 && isUse12Mode(ctx)) {
+            ret = currentHour -12;
+        }
+        return ret;
+    }
+
+    public static String get12ModeText(int currentHour, Context ctx) {
+        String ret = "";
+        if (isUse12Mode(ctx)) {
+            if (currentHour > 12) {
+                ret = "pm";
+            } else {
+                ret = "am";
+            }
+        }
+        return ret;
+    }
+
     //判断是否含有当前Activity
     public static boolean isHasActivity(String className,String pageName,  Context ctx) {
         ArrayList<String> result = new ArrayList<String>();

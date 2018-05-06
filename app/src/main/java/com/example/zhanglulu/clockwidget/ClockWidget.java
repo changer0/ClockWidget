@@ -35,6 +35,8 @@ public class ClockWidget extends AppWidgetProvider {
     public static final String CLOCK_WIDGET_TEXT_SIZE_WEEK = "CLOCK_WIDGET_TEXT_SIZE_WEEK";
     public static final String CLOCK_WIDGET_TEXT_SIZE_SETTING = "CLOCK_WIDGET_TEXT_SIZE_SETTING";
     public static final String CLOCK_WIDGET_TEXT_SIZE_CHINESE = "CLOCK_WIDGET_TEXT_SIZE_CHINESE";
+    //使用12进制
+    public static final String CLOCK_WIDGET_IS_USE_12_MODE = "CLOCK_WIDGET_IS_USE_12_MODE";
 
 
 

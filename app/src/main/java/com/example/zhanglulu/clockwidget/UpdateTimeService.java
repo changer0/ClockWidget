@@ -150,10 +150,16 @@ public class UpdateTimeService extends Service {
         int month = time.month+1;
         int day = time.monthDay;
         String strTime = "";
-        if (isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_SECOND)) {
-            strTime = String.format("%02d:%02d:%02d", hour, min, second);
+        if (Utils.isUse12Mode(this)) {
+            updateView.setViewVisibility(R.id.widget_time_mode, View.VISIBLE);
+            updateView.setTextViewText(R.id.widget_time_mode, Utils.get12ModeText(hour, this));
         } else {
-            strTime = String.format("%02d:%02d", hour, min);
+            updateView.setViewVisibility(R.id.widget_time_mode, View.GONE);
+        }
+        if (isDisplayView(ClockWidget.CLOCK_WIDGET_HAS_SECOND)) {
+            strTime = String.format("%02d:%02d:%02d", Utils.get12ModeTime(hour, this), min, second);
+        } else {
+            strTime = String.format("%02d:%02d", Utils.get12ModeTime(hour, this), min);
         }
         String strData = String.format("%04d-%02d-%02d", year, month, day);
         updateView.setTextViewText(R.id.widget_time, strTime);
